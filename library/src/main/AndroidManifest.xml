@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="idea.analyzesystem.android.edittext">
+    package="idea.analyzesystem.edittext">
 
     <application
         android:allowBackup="true"
