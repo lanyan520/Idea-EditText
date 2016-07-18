@@ -7,13 +7,14 @@ Idea-EditText
 ### 项目导入依赖
 
 compile 'com.analyzesystem:Idea-EditText:0.0.1 </br>
-<dependency>
-   <groupId>com.analyzesystem</groupId>
-   <artifactId>Idea-EditText</artifactId>
-   <version>0.0.1</version>
-   <type>pom</type>
-</dependency>
-
+{ </br>
+ <dependency></br>
+   <groupId>com.analyzesystem</groupId></br>
+   <artifactId>Idea-EditText</artifactId></br>
+   <version>0.0.1</version></br>
+   <type>pom</type></br>
+ </dependency></br>
+}</br>
 ----------------------------------
 ### 目前支持的自定义EditText相关控件有以下控件
 * IPView
