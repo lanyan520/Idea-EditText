@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 23
@@ -16,9 +17,23 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:23.4.0'
 }
+
+//添加
+publish {
+    userOrg = 'idea'//bintray.com用户名
+    groupId = 'com.analyzesystem'//jcenter上的路径
+    artifactId = 'Idea-EditText'//项目名称
+    publishVersion = '0.0.1'//版本号
+    desc = '自定义EditText扩展库，目前支持IP、端口、mac地址输入'//描述
+    website = 'https://github.com/lanyan520/idea-edittext'//网站
+}
+
