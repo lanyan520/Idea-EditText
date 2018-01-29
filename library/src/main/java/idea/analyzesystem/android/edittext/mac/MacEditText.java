@@ -19,11 +19,11 @@ import idea.analyzesystem.android.edittext.AbsEditText;
  */
 public class MacEditText extends AbsEditText {
     public MacEditText(Context context) {
-        this(context, null, 0);
+        this(context,null,0);
     }
 
     public MacEditText(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        this(context, attrs,0);
     }
 
     public MacEditText(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -42,6 +42,11 @@ public class MacEditText extends AbsEditText {
 
     @Override
     public boolean checkInputValue() {
-        return getText().length()==2?true:false;
+        return getText().toString().trim().length()==2?true:false;
+    }
+
+    @Override
+    public int getEditTextInputType() {
+        return InputType.TYPE_CLASS_TEXT;
     }
 }

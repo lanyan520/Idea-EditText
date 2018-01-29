@@ -12,22 +12,52 @@ import idea.analyzesystem.android.edittext.ip.IPView;
  */
 public class PortView extends IPEditText {
     public PortView(Context context) {
-        this(context, null, 0);
+        this(context,null,0);
     }
 
     public PortView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        this(context, attrs,0);
     }
 
     public PortView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+       init();
+    }
+
+    private void init() {
         setFocusableInTouchMode(true);
-        setGravity(Gravity.CENTER);
-        setPadding(4,4,4,4);
+        setGravity(Gravity.CENTER_VERTICAL);
+        setPadding(10, 4, 4, 4);
     }
 
     @Override
     public int getMaxLength() {
         return 5;
+    }
+
+    @Override
+    public boolean checkInputValue() {
+        String textvalue = getText().toString().trim();
+        if(textvalue.isEmpty()){
+            return false;
+        }else{
+            int number = Integer.valueOf(textvalue);
+            return number>0&&number<65536;
+        }
+    }
+
+    public boolean checkDelayTimeValue() {
+        String textvalue = getText().toString().trim();
+        if(textvalue.isEmpty()){
+            return false;
+        }else{
+            int number = Integer.valueOf(textvalue);
+            return number>=0&&number<65536;
+        }
+    }
+
+    public short getPort(){
+        int number = Integer.valueOf(getText().toString().trim());
+        return (short)number;
     }
 }

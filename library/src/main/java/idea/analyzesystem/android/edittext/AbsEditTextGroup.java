@@ -1,12 +1,14 @@
 package idea.analyzesystem.android.edittext;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,10 +21,10 @@ public abstract class AbsEditTextGroup extends LinearLayout implements TextWatch
 
     protected float sp16 = 16.0f;
     protected int dp4 = 4;
-    private ArrayList<AbsEditText> editTexts = new ArrayList<AbsEditText>();
+    protected ArrayList<AbsEditText> editTexts = new ArrayList<AbsEditText>();
 
     public AbsEditTextGroup(Context context) {
-        this(context, null, 0);
+        this(context,null,0);
     }
 
     public AbsEditTextGroup(Context context, AttributeSet attrs) {
@@ -34,6 +36,7 @@ public abstract class AbsEditTextGroup extends LinearLayout implements TextWatch
         addViews();
         buildListener();
     }
+
 
     protected void addViews() {
         for (int i = 0; i < getChildCount(); i++) {
@@ -50,7 +53,7 @@ public abstract class AbsEditTextGroup extends LinearLayout implements TextWatch
     protected AbsEditText createAbsEditText() {
 
         AbsEditText absEditText = getAbsEditText();
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT);
+        LayoutParams params = new LayoutParams(0, LayoutParams.MATCH_PARENT);
         params.weight = 1;
         absEditText.setLayoutParams(params);
         absEditText.setTextSize(sp16);//sp
@@ -59,14 +62,14 @@ public abstract class AbsEditTextGroup extends LinearLayout implements TextWatch
         absEditText.setPadding(dp4, dp4, dp4, dp4);
         absEditText.setSingleLine();
         absEditText.setFocusableInTouchMode(true);
-        absEditText.setBackgroundColor(0xFFFFFFFF);
+        absEditText.setBackgroundDrawable(new ColorDrawable(0xFFFFFFFF));
         applyEditTextTheme(absEditText);
         return absEditText;
     }
 
     protected TextView createSemicolonTextView() {
         TextView textView = new TextView(getContext());
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
         textView.setLayoutParams(params);
         textView.setTextSize(sp16);//sp
         textView.setTextColor(0xFF444444);
@@ -107,10 +110,10 @@ public abstract class AbsEditTextGroup extends LinearLayout implements TextWatch
         }
     }
 
-    public boolean checkInputValue(AbsEditText... params) {
+    public boolean checkInputValue() {
         boolean result = true;
-        for (int i = 0; i < params.length - 1; i++) {
-            if (!params[i].checkInputValue()) {
+        for (int i = 0; i < editTexts.size(); i++) {
+            if (!editTexts.get(i).checkInputValue()) {
                 result = false;
                 break;
             }
@@ -119,15 +122,45 @@ public abstract class AbsEditTextGroup extends LinearLayout implements TextWatch
         return result;
     }
 
-    public String getValues() {
-        String result = "";
+    /**
+     * IP网关子网掩码转byte4个字节
+     * @return
+     */
+    public byte[] getBytesWithIP() {
+        byte[] result = new byte[4];
         for (int i = 0; i < editTexts.size(); i++) {
-            result += editTexts.get(i).getText().toString();
+            int number = Integer.valueOf(editTexts.get(i).getText().toString());
+            result[i] = (byte)number;
         }
         return result;
     }
 
-    class OnDelKeyListener implements View.OnKeyListener {
+    /**
+     * Mac地址转换6字节byte
+     * @return
+     */
+    public byte[] getBytesWithMac() {
+        byte[] result = new byte[6];
+        for (int i = 0; i < editTexts.size(); i++) {
+            String mac = editTexts.get(i).getText().toString();
+            byte byteMac =Integer.valueOf(mac, 16).byteValue();
+            result[i] = byteMac;
+        }
+        return result;
+    }
+
+
+
+    /**
+     * 重置自布局的输入控件
+     */
+    public void resetText(){
+        for(AbsEditText editText:editTexts){
+            editText.setText("");
+        }
+    }
+
+    class OnDelKeyListener implements OnKeyListener {
 
         private AbsEditText clearEditText;
         private AbsEditText requestEditText;
@@ -142,12 +175,16 @@ public abstract class AbsEditTextGroup extends LinearLayout implements TextWatch
                     && event.getAction() == KeyEvent.ACTION_DOWN&&clearEditText.getSelectionStart()==0) {
                 clearEditText.clearFocus();
                 requestEditText.requestFocus();
+                requestEditText.setSelection(requestEditText.getText().toString().trim().length());
                 return true;
             }
             return false;
         }
     }
 
+    public ArrayList<AbsEditText> getChildEditTextViews(){
+        return editTexts;
+    }
     public abstract int getChildCount();
 
     public abstract AbsEditText getAbsEditText();
@@ -159,6 +196,7 @@ public abstract class AbsEditTextGroup extends LinearLayout implements TextWatch
     public abstract void applySemicolonTextViewTheme(TextView semicolonTextView);
 
     public abstract void applyEditTextTheme(AbsEditText absEditText);
+
 
 
 }

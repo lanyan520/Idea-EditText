@@ -17,18 +17,17 @@ import java.util.ArrayList;
 
 import idea.analyzesystem.android.edittext.AbsEditText;
 import idea.analyzesystem.android.edittext.AbsEditTextGroup;
-import idea.analyzesystem.edittext.R;
 
 /**
  * Created by idea on 2016/7/15.
  */
 public class MacView extends AbsEditTextGroup {
     public MacView(Context context) {
-        super(context);
+        this(context,null,0);
     }
 
     public MacView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs,0);
     }
 
     public MacView(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -64,5 +63,41 @@ public class MacView extends AbsEditTextGroup {
     @Override
     public void applyEditTextTheme(AbsEditText absEditText) {
 
+    }
+
+    @Override
+    public boolean checkInputValue() {
+        return super.checkInputValue();
+    }
+
+    public void setMacText(String[] macValues){
+        for(int i=0; i<editTexts.size(); i++){
+            editTexts.get(i).setText(macValues[i]);
+        }
+    }
+
+    public String getMacAddress(){
+        String result = "";
+        for(int i=0; i<editTexts.size()-1; i++){
+            result+= editTexts.get(i).getText().toString().trim()+":";
+        }
+        result+= editTexts.get(5).getText().toString().trim();
+
+        return result;
+    }
+
+    /**
+     * setAllFocuse false 禁用编辑器
+     * @param focuse
+     */
+    public void setAllFocuse(boolean focuse){
+        for(int i=0; i<editTexts.size(); i++){
+            editTexts.get(i).setFocusable(focuse);
+            editTexts.get(i).setFocusableInTouchMode(focuse);
+        }
+    }
+
+    public void setChildIndexText(int index,String text){
+        editTexts.get(index).setText(text);
     }
 }

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F0F0F0"
-    android:orientation="vertical"
-    tools:context="idea.analyzesystem.android.edittext.MainActivity">
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
@@ -19,18 +17,20 @@
 
     <idea.analyzesystem.android.edittext.ip.IPView
         android:layout_width="match_parent"
+        android:id="@+id/ipView"
         android:layout_height="40dp"
-        android:padding="4dp"
         android:layout_margin="10dp"/>
 
     <idea.analyzesystem.android.edittext.mac.MacView
+        android:id="@+id/macView"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:padding="4dp"/>
+        android:layout_margin="10dp"/>
 
     <idea.analyzesystem.android.edittext.port.PortView
         android:layout_width="80dp"
         android:layout_height="40dp"
         android:background="#FFFFFF"
-        android:padding="4dp"/>
+        android:id="@+id/portView"
+        android:layout_margin="10dp"/>
 </LinearLayout>

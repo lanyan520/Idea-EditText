@@ -3,6 +3,7 @@ package idea.analyzesystem.android.edittext;
 import android.content.Context;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.text.method.DigitsKeyListener;
 import android.text.method.NumberKeyListener;
 import android.util.AttributeSet;
 import android.widget.EditText;
@@ -10,6 +11,8 @@ import android.widget.EditText;
 /**
  * Created by idea on 2016/7/15.
  */
+
+
 public abstract class AbsEditText extends EditText {
     public AbsEditText(Context context) {
         this(context,null,0);
@@ -29,6 +32,7 @@ public abstract class AbsEditText extends EditText {
      * 初始化配置
      */
     protected void setMaxLength(){
+        //setOnKeyListener((OnKeyListener) DigitsKeyListener.getInstance(""));
         setFilters(new InputFilter[]{new InputFilter.LengthFilter(getMaxLength())});
     }
 
@@ -41,7 +45,7 @@ public abstract class AbsEditText extends EditText {
 
             @Override
             public int getInputType() {
-                return InputType.TYPE_CLASS_NUMBER;
+                return getEditTextInputType();
             }
         });
     }
@@ -63,6 +67,8 @@ public abstract class AbsEditText extends EditText {
      * @return
      */
     public abstract boolean checkInputValue();
+
+    public abstract int getEditTextInputType();
 
 
 }
